@@ -1,0 +1,9 @@
+.weekdays-header{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    margin-bottom: 10px;
+}
+.weekday{
+    text-align: center;
+    font-weight: bold;
+}

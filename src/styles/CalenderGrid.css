@@ -1,0 +1,13 @@
+.calendar {
+    text-align: center;
+    font-family: 'Arial',sans-serif;
+}
+
+.month-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: auto;
+    grid-gap: 10px;
+    margin: 20px;
+    background-color: #fff;
+}
