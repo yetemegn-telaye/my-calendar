@@ -2,12 +2,16 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import CalenderGrid from './components/Calendar/CalenderGrid';
+import { TaskProvider } from './context/TaskContext';
+import { LabelProvider } from './context/LabelContext';
 
 function App() {
   return (
-    <div className="App">
+    <TaskProvider>
+      <LabelProvider>
       <CalenderGrid />
-    </div>
+      </LabelProvider>
+    </TaskProvider>
   );
 }
 
