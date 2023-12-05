@@ -1,26 +1,61 @@
-import React from "react";
-import {format} from "date-fns";
-import { Task } from "./CalenderGrid";
+import React, { useState } from "react";
+import {format, isSameDay} from "date-fns";
 import '../../styles/DayBox.css';
 import TaskCard from "./TaskCard";
+import { useTaskContext } from "../../context/TaskContext";
+import { useLabelContext } from "../../context/LabelContext";
 
 
-interface DayProps {
-    date: Date;
-    setTask: any;
-    tasks: Task[];
-}
 
-const DayBox: React.FC<any> = ({date,setTask, tasks, allTasks}) => {
+const DayBox: React.FC<any> = ({date}) => {
+    const {tasks, addTask, updateTask} = useTaskContext();
+    const {labels} = useLabelContext();
+   
+    const dayTasks = tasks.filter((task)=>
+        isSameDay(new Date(task.date), new Date(date))
+    );
+    const [newTaskTitle, setNewTaskTitle] = useState("");
+    const handleAddTask = () => {
+        const newTask = {
+            id: Math.floor(Math.random() * 1000),
+            title: newTaskTitle,
+            labelIds: [],
+            date: date
+        }
+        console.log(dayTasks);
+        addTask(newTask);
+        setNewTaskTitle("");
+    }
+    
+    const handleEditTask = (taskId: number, updatedTask: any) => {
+        updateTask(taskId, updatedTask);
+        setNewTaskTitle("");
+    }
+
     return(
         <div className="day-box">
             <div className="date">
                 {format(date,"d")}
             </div>
             <div className="tasks">
-                {tasks.map((task: any, index:any) => (
-                  <TaskCard setTask={setTask} key={task.id} task={task} date={date} allTasks={allTasks} index={index}  />
+                {dayTasks.map((task,index)=>(
+                    <TaskCard 
+                    key={task.id} 
+                    task={task} 
+                    labels = {labels.filter((label)=> task.labelIds.includes(label.id)  )}
+                    onEditTask={handleEditTask}
+                     />
                 ))}
+                  <div>
+             
+                <input 
+                type="text"
+                value={newTaskTitle}
+                onChange={(e)=>setNewTaskTitle(e.target.value)}
+                />
+                <button onClick={handleAddTask}>Add Task</button>
+               
+            </div>
             </div>
         </div>
     )
