@@ -8,7 +8,7 @@ import { useLabelContext } from "../../context/LabelContext";
 
 
 const DayBox: React.FC<any> = ({date}) => {
-    const {tasks, addTask} = useTaskContext();
+    const {tasks, addTask, updateTask} = useTaskContext();
     const {labels} = useLabelContext();
    
     const dayTasks = tasks.filter((task)=>
@@ -27,6 +27,11 @@ const DayBox: React.FC<any> = ({date}) => {
         setNewTaskTitle("");
     }
     
+    const handleEditTask = (taskId: number, updatedTask: any) => {
+        updateTask(taskId, updatedTask);
+        setNewTaskTitle("");
+    }
+
     return(
         <div className="day-box">
             <div className="date">
@@ -38,7 +43,7 @@ const DayBox: React.FC<any> = ({date}) => {
                     key={task.id} 
                     task={task} 
                     labels = {labels.filter((label)=> task.labelIds.includes(label.id)  )}
-                  
+                    onEditTask={handleEditTask}
                      />
                 ))}
                   <div>
