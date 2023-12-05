@@ -10,6 +10,7 @@ interface Task {
 interface TaskContextType {
   tasks: Task[];
   addTask: (newTask: Task) => void;
+  updateTask: (taskId: number, updatedTask: Task) => void;
 }
 
 const TaskContext = createContext<TaskContextType | undefined>(undefined);
@@ -37,8 +38,16 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
     localStorage.setItem("tasks", JSON.stringify(updatedTasks));
   };
 
+  const updateTask = (taskId: number, updatedTask: Task) => {
+    const updatedTasks = tasks.map((task)=>
+        task.id === taskId ? updatedTask : task
+    );
+    setTasks(updatedTasks);
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+  };
+
   return (
-    <TaskContext.Provider value={{ tasks, addTask }}>
+    <TaskContext.Provider value={{ tasks, addTask, updateTask }}>
       {children}
     </TaskContext.Provider>
   );
