@@ -9,12 +9,15 @@ import { useLabelContext } from "../../context/LabelContext";
 
 const DayBox: React.FC<any> = ({date}) => {
     const {tasks, addTask, updateTask} = useTaskContext();
-    const {labels} = useLabelContext();
-   
+    const {labels,addLabel} = useLabelContext();
+    
+     
+
     const dayTasks = tasks.filter((task)=>
         isSameDay(new Date(task.date), new Date(date))
     );
     const [newTaskTitle, setNewTaskTitle] = useState("");
+    
     const handleAddTask = () => {
         const newTask = {
             id: Math.floor(Math.random() * 1000),
@@ -31,6 +34,12 @@ const DayBox: React.FC<any> = ({date}) => {
         updateTask(taskId, updatedTask);
         setNewTaskTitle("");
     }
+    const handleAddLabel = (taskId: number, newLabel: any) => {
+        addLabel(newLabel);
+        let labelAddedTask:any = tasks.find((task: any) => task.id === taskId);
+        labelAddedTask?.labelIds.push(newLabel.id);
+        updateTask(taskId, labelAddedTask);
+    }
 
     return(
         <div className="day-box">
@@ -44,6 +53,7 @@ const DayBox: React.FC<any> = ({date}) => {
                     task={task} 
                     labels = {labels.filter((label)=> task.labelIds.includes(label.id)  )}
                     onEditTask={handleEditTask}
+                    onAddLabel={handleAddLabel}
                      />
                 ))}
                   <div>
@@ -54,8 +64,9 @@ const DayBox: React.FC<any> = ({date}) => {
                 onChange={(e)=>setNewTaskTitle(e.target.value)}
                 />
                 <button onClick={handleAddTask}>Add Task</button>
-               
+                
             </div>
+           
             </div>
         </div>
     )

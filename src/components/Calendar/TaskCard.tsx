@@ -1,10 +1,12 @@
-import React from "react";
+import React,{useState} from "react";
 import "../../styles/TaskCard.css";
 
 
-const TaskCard: React.FC<any>  = ({task,labels,onEditTask}) => {
-const [isEditing, setIsEditing] = React.useState(false);
-const [editedTaskTitle, setEditedTaskTitle] = React.useState(task.title);
+const TaskCard: React.FC<any>  = ({task,labels,onEditTask,onAddLabel}) => {
+const [isEditing, setIsEditing] = useState(false);
+const [editedTaskTitle, setEditedTaskTitle] = useState(task.title);
+const [newTaskLabel, setNewTaskLabel] = useState("");
+const [newLabelColor, setNewLabelColor] = useState("");
 
 const handleEditClick = ()=>{
     setIsEditing(true);
@@ -14,6 +16,16 @@ const handleSaveClick = ()=>{
     const updatedTask = {...task, title: editedTaskTitle};
     onEditTask(task.id, updatedTask);
     setIsEditing(false);
+}
+const handleAddLabel = () => {
+    const newLabel = {
+        id: Math.floor(Math.random() * 1000),
+        text: newTaskLabel,
+        color: newLabelColor
+    }
+    onAddLabel(task.id, newLabel);
+    setNewTaskLabel("");
+    setNewLabelColor("");
 }
  
     return(
@@ -25,7 +37,11 @@ const handleSaveClick = ()=>{
                     className="label-color-box"
                      style={{backgroundColor: label.color}}></span>
                 ))}
-                
+                <div>
+                <input type="text" value={newTaskLabel} onChange={(e)=>setNewTaskLabel(e.target.value)}/>
+                <input type="color" value={newLabelColor} onChange={(e)=>setNewLabelColor(e.target.value)}/>
+                <button onClick={handleAddLabel}>Add Label</button>
+            </div>
             </div>
             {isEditing ? (
                 <div className="edit-task">
