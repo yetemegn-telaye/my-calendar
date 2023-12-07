@@ -9,27 +9,45 @@ import { useLabelContext } from "../../context/LabelContext";
 
 const DayBox: React.FC<any> = ({date}) => {
     const {tasks, addTask, updateTask} = useTaskContext();
-    const {labels} = useLabelContext();
-   
+    const {labels,addLabel} = useLabelContext();
+    const [labelColor, setLabelColor] = useState("");
+    const [labelText, setLabelText] = useState("");
+     
+
     const dayTasks = tasks.filter((task)=>
         isSameDay(new Date(task.date), new Date(date))
     );
     const [newTaskTitle, setNewTaskTitle] = useState("");
+    
     const handleAddTask = () => {
+        const newLabel = {
+            id: Math.floor(Math.random() * 1000),
+            text: labelText,
+            color: labelColor
+        }
         const newTask = {
             id: Math.floor(Math.random() * 1000),
             title: newTaskTitle,
-            labelIds: [],
+            labelIds: [newLabel.id],
             date: date
         }
         console.log(dayTasks);
         addTask(newTask);
+        addLabel(newLabel);
         setNewTaskTitle("");
+        setLabelText("");
+        setLabelColor("");
     }
     
     const handleEditTask = (taskId: number, updatedTask: any) => {
         updateTask(taskId, updatedTask);
         setNewTaskTitle("");
+    }
+    const handleAddLabel = (taskId: number, newLabel: any) => {
+        addLabel(newLabel);
+        let labelAddedTask:any = tasks.find((task: any) => task.id === taskId);
+        labelAddedTask?.labelIds.push(newLabel.id);
+        updateTask(taskId, labelAddedTask);
     }
 
     return(
@@ -44,6 +62,7 @@ const DayBox: React.FC<any> = ({date}) => {
                     task={task} 
                     labels = {labels.filter((label)=> task.labelIds.includes(label.id)  )}
                     onEditTask={handleEditTask}
+                    onAddLabel={handleAddLabel}
                      />
                 ))}
                   <div>
@@ -53,9 +72,12 @@ const DayBox: React.FC<any> = ({date}) => {
                 value={newTaskTitle}
                 onChange={(e)=>setNewTaskTitle(e.target.value)}
                 />
+                <input type="text" value={labelColor} placeholder="label color" onChange={(e)=>setLabelColor(e.target.value)} />
+                <input type="text" value={labelText} placeholder="label text" onChange={(e)=>setLabelText(e.target.value)} />
                 <button onClick={handleAddTask}>Add Task</button>
-               
+                
             </div>
+           
             </div>
         </div>
     )
