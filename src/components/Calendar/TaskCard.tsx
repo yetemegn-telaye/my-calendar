@@ -7,6 +7,16 @@ const [isEditing, setIsEditing] = useState(false);
 const [editedTaskTitle, setEditedTaskTitle] = useState(task.title);
 const [newTaskLabel, setNewTaskLabel] = useState("");
 const [newLabelColor, setNewLabelColor] = useState("");
+const [isLabelPopupOpen, setIsLabelPopupOpen] = useState(false);
+     
+
+    const openPopup = () => {
+        setIsLabelPopupOpen(true);
+    }
+
+    const closePopup = () => {
+        setIsLabelPopupOpen(false);
+    }
 
 const handleEditClick = ()=>{
     setIsEditing(true);
@@ -29,7 +39,20 @@ const handleAddLabel = () => {
 }
  
     return(
-        <div className="task-card">
+        <div className="task-card" onDoubleClick={openPopup}>
+            {isLabelPopupOpen && (
+                <div className="popup-overlay">
+                    <div className="popup-container">
+                        <button className="popup-close" onClick={closePopup}>X</button>
+                        <div>
+                <input type="text" value={newTaskLabel} onChange={(e)=>setNewTaskLabel(e.target.value)}/>
+                <input type="color" value={newLabelColor} onChange={(e)=>setNewLabelColor(e.target.value)}/>
+                <button onClick={handleAddLabel}>Add Label</button>
+            </div> 
+            </div>
+            </div>
+               
+            )}
             <div className="task-labels">
                 {labels.map((label:any) => (
                     <span key={label.id} 
@@ -37,11 +60,7 @@ const handleAddLabel = () => {
                     className="label-color-box"
                      style={{backgroundColor: label.color}}></span>
                 ))}
-                <div>
-                <input type="text" value={newTaskLabel} onChange={(e)=>setNewTaskLabel(e.target.value)}/>
-                <input type="color" value={newLabelColor} onChange={(e)=>setNewLabelColor(e.target.value)}/>
-                <button onClick={handleAddLabel}>Add Label</button>
-            </div>
+                
             </div>
             {isEditing ? (
                 <div className="edit-task">
