@@ -23,6 +23,20 @@
     margin: 2px;
     border-radius: 4px;
 }
+.edit-task-form input{
+    padding: 3px;
+    margin-bottom: 5px;
+}
+.edit-task-form button{
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid white;
+    background-color: #201f1f;
+    color: white;
+    font-weight: bold;
+    align-self: center;
+    margin-left: 5px;
+}
 /* Define styles for the overlay background */
 .popup-overlay {
     position: relative;

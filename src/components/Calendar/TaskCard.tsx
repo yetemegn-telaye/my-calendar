@@ -63,7 +63,7 @@ const handleAddLabel = () => {
                 
             </div>
             {isEditing ? (
-                <div className="edit-task">
+                <div className="edit-task-form">
                     <input 
                       type="text"
                         value={editedTaskTitle}
