@@ -99,7 +99,9 @@ const DayBox: React.FC<any> = ({date}) => {
                 
            
             </div>
+            <div className="add-task-btn-container" >
             <button className="add-task-btn" onClick={openPopup}>+</button>
+            </div>
         </div>
     )
 }

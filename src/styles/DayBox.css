@@ -16,16 +16,26 @@
     margin-bottom: 10px;
 }
 
-.add-task-btn{
-    display: none;
+.add-task-btn-container{
+    width: 100%;
+   height: 50px;
 }
 
-.day-box:hover{
+.add-task-btn{
+    display: none;
     cursor: pointer;
+    color: orangered;
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 40%;
+}
+
+.add-task-btn-container:hover{
     .add-task-btn{
         display: block;
     }
 }
+
 
 /* Define styles for the overlay background */
 .popup-overlay {
