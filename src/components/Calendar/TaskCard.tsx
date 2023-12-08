@@ -43,9 +43,9 @@ const handleAddLabel = () => {
             {isLabelPopupOpen && (
                 <div className="popup-overlay">
                     <div className="popup-container">
-                        <button className="popup-close" onClick={closePopup}>X</button>
-                        <div>
-                <input type="text" value={newTaskLabel} onChange={(e)=>setNewTaskLabel(e.target.value)}/>
+                        <button className="popup-close-button" onClick={closePopup}>X</button>
+                <div className="add-label-form">
+                <input type="text" placeholder="Label Name" value={newTaskLabel} onChange={(e)=>setNewTaskLabel(e.target.value)}/>
                 <input type="color" value={newLabelColor} onChange={(e)=>setNewLabelColor(e.target.value)}/>
                 <button onClick={handleAddLabel}>Add Label</button>
             </div> 
@@ -70,11 +70,15 @@ const handleAddLabel = () => {
                         onChange={(e)=>setEditedTaskTitle(e.target.value)}
                     />
                     <button onClick={handleSaveClick}>Save</button>
+                    <button onClick={()=>setIsEditing(false)}>Cancel</button>
                 </div>
             ):(
+                <div>
                 <div className="task-title">{task.title}</div>
+                <button onClick={handleEditClick}>Edit</button>
+                </div>
             )}
-            <button onClick={handleEditClick}>Edit</button>
+            
         </div>
     )
 }
