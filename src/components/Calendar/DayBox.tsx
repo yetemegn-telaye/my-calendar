@@ -12,7 +12,16 @@ const DayBox: React.FC<any> = ({date}) => {
     const {labels,addLabel} = useLabelContext();
     const [labelColor, setLabelColor] = useState("");
     const [labelText, setLabelText] = useState("");
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
      
+
+    const openPopup = () => {
+        setIsPopupOpen(true);
+    }
+
+    const closePopup = () => {
+        setIsPopupOpen(false);
+    }
 
     const dayTasks = tasks.filter((task)=>
         isSameDay(new Date(task.date), new Date(date))
@@ -52,9 +61,34 @@ const DayBox: React.FC<any> = ({date}) => {
 
     return(
         <div className="day-box">
-            <div className="date">
+              <div className="date">
                 {format(date,"d")}
             </div>
+            <div className="add-task-btn-container" >
+            <button className="add-task-btn" onClick={openPopup}>+</button>
+            </div>
+            { isPopupOpen && (
+                <div className="task-popup-overlay">
+                    <div className="task-popup-container">
+                        <button className="task-popup-close" onClick={closePopup}>X</button>
+                <div className="add-task-popup">
+             
+                <input 
+                type="text"
+                placeholder="Task name"
+                value={newTaskTitle}
+                onChange={(e)=>setNewTaskTitle(e.target.value)}
+                />
+                <input type="text" value={labelText} placeholder="label text" onChange={(e)=>setLabelText(e.target.value)} />
+                <input type="color" value={labelColor} placeholder="label color" onChange={(e)=>setLabelColor(e.target.value)} />
+                <button onClick={handleAddTask} className="popup-add-task-btn">Add Task</button>
+                
+            </div>
+            </div>
+            </div>
+            )}
+            
+          
             <div className="tasks">
                 {dayTasks.map((task,index)=>(
                     <TaskCard 
@@ -65,20 +99,10 @@ const DayBox: React.FC<any> = ({date}) => {
                     onAddLabel={handleAddLabel}
                      />
                 ))}
-                  <div>
-             
-                <input 
-                type="text"
-                value={newTaskTitle}
-                onChange={(e)=>setNewTaskTitle(e.target.value)}
-                />
-                <input type="text" value={labelColor} placeholder="label color" onChange={(e)=>setLabelColor(e.target.value)} />
-                <input type="text" value={labelText} placeholder="label text" onChange={(e)=>setLabelText(e.target.value)} />
-                <button onClick={handleAddTask}>Add Task</button>
                 
-            </div>
            
             </div>
+            
         </div>
     )
 }

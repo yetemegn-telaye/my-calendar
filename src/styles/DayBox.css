@@ -9,8 +9,97 @@
     align-items: center;
 }
 
+
 .day-box .date{
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 10px;
 }
+
+.add-task-btn-container{
+    width: 100%;
+   height: 50px;
+}
+
+.add-task-btn{
+    display: none;
+    cursor: pointer;
+    color: orangered;
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 40%;
+}
+
+.add-task-btn-container:hover{
+    .add-task-btn{
+        display: block;
+    }
+}
+
+
+.task-popup-overlay {
+    position: relative;
+    top:0;
+    left: 0;
+    width: 100%;
+    padding: 0 10px;
+    background: #eee; /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Adjust the z-index as needed */
+  }
+  
+  /* Define styles for the popup container */
+  .task-popup-container {
+    background-color: #201f1f;
+    color: white;
+    opacity: 0.8;
+    border-radius: 20px;
+    padding: 40px 20px;
+    box-shadow: 0 0 10px rgba(162, 156, 156, 0.3); /* Box shadow for the popup */
+    max-width: 80%; /* Adjust the width as needed */
+    user-select: none;
+  }
+  
+  /* Define styles for the close button */
+  .task-popup-close {
+    position: absolute;
+    top: 15px;
+    right: 30px;
+    cursor: pointer;
+    background-color: #201f1f;
+    color: white;
+    border: 1px solid white;
+    font-weight: bold;
+    border-radius: 10px;
+  }
+  .add-task-popup {
+    display: flex;
+    flex-direction: column;
+    gap:5px;
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+  .add-task-popup input{
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 2px;
+    text-align: center;
+  }
+  .popup-add-task-btn{
+    background-color: #201f1f;
+    color: white;
+    font-weight: bold;
+    margin-top: 10px;
+    border: 1px solid white;
+    border-radius: 10px;
+    padding: 5px;
+    width: 50%;
+    align-self: center;
+    cursor: pointer;
+  }
+    .popup-add-task-btn:hover{
+        background-color: rgb(39, 170, 39);
+        color: white;
+    }
